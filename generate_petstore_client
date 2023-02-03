@@ -1,0 +1,20 @@
+#!/bin/bash
+
+rm -rf ./src
+
+
+docker run --rm \
+  --user $(id -u):$(id -g) \
+  -v ${PWD}:/local openapitools/openapi-generator-cli:v6.3.0 generate \
+  -i https://petstore3.swagger.io/api/v3/openapi.json \
+  -g dart-dio \
+  -p pubName=petstore_client \
+  -p pubLibrary=petstore_client \
+  -p pubVersion=2.0.0 \
+  -p pubDescription="Grow Client API" \
+  -o /local/packages/petstore_client
+
+cd packages/petstore_client
+
+flutter pub get
+flutter pub run build_runner build --delete-conflicting-outputs 
