@@ -10,7 +10,7 @@ class PetsService {
       : _petApi = client.getPetApi(),
         _petMapper = petMapper;
 
-  Future<List<Pet>> getPets(api.PetstoreClient client) async {
+  Future<List<Pet>> getPets() async {
     final response = await _petApi.findPetsByStatus();
 
     if (response.statusCode != 200) {
